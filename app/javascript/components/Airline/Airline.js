@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Fragment, useImperativeHandle} from 'react'
 import axios from 'axios'
 import Header from './Header'
 import style from 'styled-components'
 import styled from 'styled-components'
+import ReviewForm from './ReviewForm'
+import Airlines from '../Airlines/Airlines'
 
 const Wrapper = styled.div`
 margin-left: auto;
@@ -39,24 +41,48 @@ const Airline = (props) => {
         .catch(resp => console.log(resp))
     }, [])
 
+    const handleChange = (e) =>{
+        e.preventDefault()
+        setReview(Object.assign({}, review, {[e.target.name]: e.target.value}))
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const csrfToken = document.querySelector('[name=csrf-token]').content
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+
+        const airline_id = airline.data.id
+        axios.post('/api/vi/reviews', {review, airline_id})
+        .then(resp => {
+            debugger
+        })
+        .catch(resp => {})
+    }
+
     return (
         <Wrapper>
-            <Column>
-                <Main>
-                {
-                    loaded &&
-                    <Header attributes={airline.data.attributes} reviews={airline.included}/>
-                }
-    
-                <div className="reviews">
+            {
+                loaded &&
+                <Fragment>
+                    <Column>
+                        <Main>
+                            <Header attributes={airline.data.attributes} reviews={airline.included}/>
+            
+                        <div className="reviews">
 
-                </div>
-                </Main>
-            </Column>
-            <Column>
-                <div className="review-form">Review form goes here</div>
-            </Column>
-
+                        </div>
+                        </Main>
+                    </Column>
+                    <Column>
+                        <ReviewForm
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        attributes={airline.data.attributes}
+                        review={review}
+                        />
+                    </Column>
+                </Fragment>
+            }
         </Wrapper>
     )
 }
