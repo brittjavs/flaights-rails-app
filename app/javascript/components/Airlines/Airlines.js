@@ -1,11 +1,11 @@
 import React, {useState, useEffect, Fragment} from 'react'
 import axios from 'axios'
-import Airline from '../Airline/Airline'
+import Airline from './Airline'
 import styled from 'styled-components'
 
 const Home = styled.div`
 text-align: center;
-max-widht: 1200px;
+max-width: 1200px;
 margin-left: auto;
 margin-right: auto;`
 
