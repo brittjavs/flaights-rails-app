@@ -1,7 +1,6 @@
 import React, {useState, useEffect, Fragment, useImperativeHandle} from 'react'
 import axios from 'axios'
 import Header from './Header'
-import style from 'styled-components'
 import styled from 'styled-components'
 import ReviewForm from './ReviewForm'
 import Airlines from '../Airlines/Airlines'
@@ -48,14 +47,13 @@ const Airline = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
         const csrfToken = document.querySelector('[name=csrf-token]').content
         axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
         const airline_id = airline.data.id
-        axios.post('/api/vi/reviews', {review, airline_id})
-        .then(resp => {
-            debugger
-        })
+        axios.post('/api/v1/reviews', {review, airline_id})
+        .then(resp => {debugger})
         .catch(resp => {})
     }
 
