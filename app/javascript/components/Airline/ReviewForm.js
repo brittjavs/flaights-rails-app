@@ -49,8 +49,8 @@ const ReviewForm = (props) => {
     const ratingOptions = [5, 4, 3, 2, 1].map((score, index) =>{
         return(
         <Fragment>
-            <input type="radio" value={score} name="rating" onChange={()=>console.log('selected', score)} id={`rating=${score}`} />
-            <label></label>
+            <input type="radio" value={score} name="rating" checked={props.review.score == score} onChange={()=>console.log('selected', score)} id={`rating=${score}`} />
+            <label onClick={props.setRating.bind(this, score)}></label>
         </Fragment>
         )
     })
