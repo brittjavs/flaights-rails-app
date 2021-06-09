@@ -3,7 +3,6 @@ import axios from 'axios'
 import Header from './Header'
 import styled from 'styled-components'
 import ReviewForm from './ReviewForm'
-import Airlines from '../Airlines/Airlines'
 
 const Wrapper = styled.div`
 margin-left: auto;
@@ -47,13 +46,13 @@ const Airline = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
         const csrfToken = document.querySelector('[name=csrf-token]').content
         axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
         const airline_id = airline.data.id
         axios.post('/api/v1/reviews', {review, airline_id})
         .then(resp => {
+            debugger
             const included = [...airline.included, resp.data]
             setAirline({...airline, included})
             setReview({title: '', description: '', score: 0})

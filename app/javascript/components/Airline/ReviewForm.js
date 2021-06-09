@@ -5,7 +5,6 @@ import Hover from './Stars/Hover'
 import Selected from './Stars/Selected'
 
 const RatingContainer = styled.div`
-width: 95%;
 text-align: center;
 border-radius: 4px;
 font-size: 10px;
@@ -47,7 +46,6 @@ input:not(:checked) ~ label:hover ~ label {
 const Field = styled.div`
 border-radius: 4px;
 input{
-    width: 90%;
     min-height: 50px;
     border-radius: 4px;
     border: 1px solid #e6e6e6;
@@ -56,7 +54,6 @@ input{
 }
 
 textarea{
-    width: 100%;
     min-height: 80px;
     border-radius: 4px;
     border: 1px solid #e6e6e6;
@@ -70,9 +67,8 @@ padding: 20px;
 height: 100vh;
 padding-top: 100px;`
 
-const SubmitBtn = styled.div`
+const SubmitBtn = styled.button`
 color: #fff;
-width: 92%;
 background: #333;
 border-radius: 4px;
 padding: 12px;
@@ -101,7 +97,7 @@ font-weight: bold;`
 const ReviewForm = (props) => {
     const ratingOptions = [5, 4, 3, 2, 1].map((score, index) =>{
         return(
-        <Fragment>
+        <Fragment key={index}>
             <input type="radio" value={score} name="rating" checked={props.review.score == score} onChange={()=>console.log('selected', score)} id={`rating=${score}`} />
             <label onClick={props.setRating.bind(this, score)}></label>
         </Fragment>
@@ -126,7 +122,7 @@ const ReviewForm = (props) => {
                         </RatingBox>
                     </RatingContainer>
                 </Field>
-                <SubmitBtn>Submit Review</SubmitBtn>
+                <SubmitBtn type="submit">Submit Review</SubmitBtn>
             </form>
         </Wrapper>
     )
